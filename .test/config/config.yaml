@@ -1,0 +1,25 @@
+# path or URL to sample sheet (TSV format, columns: sample, condition, ...)
+samples: config/samples.tsv
+# path or URL to sequencing unit sheet (TSV format, columns: sample, unit, fq1, fq2)
+# Units are technical replicates (e.g. lanes, or resequencing of the same biological
+# sample).
+units: config/units.tsv
+
+
+ref:
+  # Ensembl species name
+  species: homo_sapiens
+  # Ensembl release (make sure to take one where snpeff data is available, check 'snpEff databases' output)
+  release: 100
+  # Genome build
+  build: GRCh38
+
+params:
+  # the parameters for trim_R2
+  pattern: "(?P<UMI>.{10})(?P<BAR>.{7})(.{0,3})GGATTCGAGGAGCGTGTGCGAACTCAGACCA{i<=2,d<=2,e<=3}(?P<BAR>.{6})ATCCACGTGCTTGAGAGGCCAGAGCATTCG(((?P<TYPE>AG)(?P<BAR>.{3}))|((?P<TYPE>TC)(?P<BAR>.{3})))"
+  # rna reads barcode
+  rna_bar: TC
+  # dna reads barcode
+  dna_bar: AG
+  # the illumina whitelist
+  whitelist: .test/3M-february-2018.txt.gz

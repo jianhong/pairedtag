@@ -1,0 +1,48 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+
+  ref:
+    type: object
+    properties:
+      species:
+        type: string
+      release:
+        type: integer
+      build:
+        type: string
+    required:
+      - species
+      - release
+      - build
+
+  params:
+    type: object
+    properties:
+      pattern:
+        type: string
+      dna_bar:
+        type: string
+      rna_bar:
+        type: string
+      whitelist:
+        type: string
+    required:
+      - pattern
+      - dna_bar
+      - rna_bar
+      - whitelist
+
+required:
+  - samples
+  - units
+  - ref
+  - params
