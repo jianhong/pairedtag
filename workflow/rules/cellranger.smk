@@ -2,6 +2,7 @@ rule cellranger:
     input:
         r1 = "results/remap_barcode/{sample}_{unit}_RNA_S1_L001_R1_001.fastq.gz",
         r2 = "results/remap_barcode/{sample}_{unit}_RNA_S1_L001_R2_001.fastq.gz",
+        ref= get_cellranger_ref
     output:
         out = "results/cellranger/{sample}_{unit}/outs",
     params:
@@ -16,9 +17,9 @@ rule cellranger:
         "docker://quay.io/nf-core/cellranger:7.1.0"
     shell:
         """
-        cellranger count --id={sample}_{unit} \
-            --transcriptome={config[ref][reference_transcriptome]} \
+        cellranger count --id={wildcards.sample}_{wildcards.unit} \
+            --transcriptome={input.ref} \
             --fastqs=results/remap_barcode \
-            --sample={sample}_{unit}_RNA \
+            --sample={wildcards.sample}_{wildcards.unit}_RNA \
             {params.variousParams}
         """

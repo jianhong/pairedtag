@@ -46,6 +46,13 @@ def get_fq2(wildcards):
     assert len(fastqs) > 0
     return fastqs
 
+def get_cellranger_ref(wildcards):
+    if "reference_transcriptome" in config["ref"].keys():
+        ref = config["ref"]["reference_transcriptome"]
+    else:
+        ref = "resources/cellranger_transcriptome/"+config["ref"]["build"]
+    return ref
+
 def get_final_output():
     final_output = expand(
         "results/remap_barcode/{sample}_{unit}_{seqtype}_S1_L001_R{reads}_001.fastq.gz",
@@ -56,20 +63,25 @@ def get_final_output():
     )
     final_output.extend(
         expand("results/remap_barcode/ori_{sample}_{unit}_RNA_S1_L001_R1_001.fastq.gz",
-        sample = samples["sample_name"],
-        unit = units["unit_name"])
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
     )
     final_output.extend(
         expand("results/remap_barcode/ori_{sample}_{unit}_DNA_S1_L001_R2_001.fastq.gz",
-        sample = samples["sample_name"],
-        unit = units["unit_name"])
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
     )
     final_output.extend(
         expand("results/remap_barcode/{sample}_{unit}_barcodeMap.tsv.gz",
-        sample = samples["sample_name"],
-        unit = units["unit_name"])
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
     )
-    if not config["ref"]["reference_transcriptome"]:
+    if not "reference_transcriptome" in config["ref"].keys():
         final_output.append("resources/cellranger_transcriptome/"+config["ref"]["build"])
+    final_output.extend(
+        expand("results/cellranger/{sample}_{unit}/outs",
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
+    )
     final_output.append("results/qc/multiqc_report.html")
     return final_output

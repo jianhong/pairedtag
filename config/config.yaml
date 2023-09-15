@@ -14,7 +14,7 @@ ref:
   # Genome build
   build: GRCh38
   # cellranger transcriptome
-  reference_transcriptome: path/to/cellRangerReferences
+  #reference_transcriptome: path/to/cellRangerReferences
 
 params:
   # the parameters for trim_R2
@@ -24,7 +24,7 @@ params:
   # dna reads barcode
   dna_bar: AG
   # the illumina whitelist
-  whitelist: .test/3M-february-2018.txt.gz
+  whitelist: config/3M-february-2018.txt.gz
 
 # The tools in this pipeline use a broad range of resources and have been assigned to the following three categories.
 # If there are not enough resources specified it can be adapted in the tools corresponding section.
