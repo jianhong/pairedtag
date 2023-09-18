@@ -13,8 +13,14 @@ ref:
   release: 100
   # Genome build
   build: GRCh38
+  # ucscname
+  ucscname: hg38
   # cellranger transcriptome
   #reference_transcriptome: path/to/cellRangerReferences
+  # bwa_index
+  #bwa_index: path/to/bwa_index
+  # chromosome size
+  #chrom_size: path/to/chrom_size_file
 
 params:
   # the parameters for trim_R2

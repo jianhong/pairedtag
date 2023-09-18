@@ -24,9 +24,11 @@ include: "rules/ref.smk"
 include: "rules/qc.smk"
 include: "rules/remap_barcode.smk"
 include: "rules/cellranger.smk"
-#include: "rules/snaptools.smk"
-#include: "rules/archr.smk"
+#include: "rules/fix_barcode.smk"
+include: "rules/snaptools.smk"
+include: "rules/archr.smk"
 #include: "rules/snapatac.smk"
+#include: "rules/snap_merge.smk"
 
 ##### target rules #####
 

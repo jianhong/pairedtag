@@ -38,6 +38,17 @@ rule genome_faidx:
     wrapper:
         "v2.2.1/bio/samtools/faidx"
 
+rule chrom_size:
+    input:
+        "resources/genome.fasta.fai",
+    output:
+        "resources/genome.sizes"
+    log:
+        "logs/genome-faidx.log",
+    cache: True
+    shell:
+        "cut -f 1,2 genome.fasta.fai > genome.sizes"
+
 rule bwa_index:
     input:
         "resources/genome.fasta",

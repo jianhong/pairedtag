@@ -1,5 +1,3 @@
-from multiprocessing import cpu_count
-
 rule remap_barcode:
     input:
         unpack(get_fastq),
@@ -13,11 +11,14 @@ rule remap_barcode:
         mp = "results/remap_barcode/{sample}_{unit}_barcodeMap.tsv.gz"
     log:
         "logs/remap_barcode/{sample}_{unit}.log",
-    threads: lambda cores: max(2, cpu_count() - 1)
+    threads: config["computingResources"]["threads"]["high"],
+    resources:
+        mem_mb=config["computingResources"]["mem_mb"]["high"],
+        runtime=config["computingResources"]["runtime"]["high"],
     conda:
-        "../envs/remap_barcode.yaml"
+        "../envs/remap_barcode.yaml",
     params:
-        scr = workflow.source_path("../scripts/trim_R2.py")
+        scr = workflow.source_path("../scripts/trim_R2.py"),
     shell:
         """
         # swith R1 and R2 for RNAseq

@@ -8,6 +8,9 @@ from snakemake.utils import validate
 
 validate(config, schema="../schemas/config.schema.yaml")
 
+if not config["ref"]["build"] in ['GRCh38', 'hg38']:
+    assert(config["ref"]["ucscname"] != "hg38")
+
 samples = (
     pd.read_csv(config["samples"], sep="\t", dtype={"sample_name": str})
     .set_index("sample_name", drop=False)
@@ -76,10 +79,18 @@ def get_final_output():
                 sample = samples["sample_name"],
                 unit = units["unit_name"])
     )
-    if not "reference_transcriptome" in config["ref"].keys():
-        final_output.append("resources/cellranger_transcriptome/"+config["ref"]["build"])
     final_output.extend(
         expand("results/cellranger/{sample}_{unit}/outs",
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
+    )
+    final_output.extend(
+        expand("results/snaptools/outs/fixed/{sample}_{unit}.fragments.tsv.gz",
+                sample = samples["sample_name"],
+                unit = units["unit_name"])
+    )
+    final_output.extend(
+        expand("results/snaptools/outs/fixed/{sample}_{unit}.fragments.tsv.gz",
                 sample = samples["sample_name"],
                 unit = units["unit_name"])
     )

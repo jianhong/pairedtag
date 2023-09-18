@@ -1,0 +1,8 @@
+channels:
+  - jdblischak
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - jdblischak::r-archr=1.0.2
+  - r-argparse

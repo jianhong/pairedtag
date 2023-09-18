@@ -21,5 +21,8 @@ rule cellranger:
             --transcriptome={input.ref} \
             --fastqs=results/remap_barcode \
             --sample={wildcards.sample}_{wildcards.unit}_RNA \
+            --localcores={threads} \
             {params.variousParams}
+        mkdir results/cellranger/{wildcards.sample}_{wildcards.unit}
+        mv {wildcards.sample}_{wildcards.unit}/outs results/cellranger/{wildcards.sample}_{wildcards.unit}/
         """
